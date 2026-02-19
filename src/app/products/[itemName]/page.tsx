@@ -12,13 +12,14 @@ export async function generateStaticParams() {
 }
 
 interface ProductDetailsPageProps {
-  params: { itemName: string };
+  params: Promise<{ itemName: string }>;
 }
 
 const ProductDetailsPage = async ({
   params,
 }: ProductDetailsPageProps) => {
-  const product = await getProduct(params.itemName);
+  const { itemName } = await params;
+  const product = await getProduct(itemName);
 
   if (!product) {
     notFound();
