@@ -21,14 +21,6 @@ const NavigationContext = createContext<NavigationContextType>({
   transitionTo: () => {},
 });
 
-export const useNavigation = () => {
-  const context = useContext(NavigationContext);
-  if (!context) {
-    throw new Error("useNavigation must be used within a NavigationProvider");
-  }
-  return context;
-};
-
 export default function NavigationProvider({
   children,
 }: {
@@ -64,3 +56,11 @@ export default function NavigationProvider({
     </NavigationContext.Provider>
   );
 }
+
+export const useNavigation = () => {
+  const context = useContext(NavigationContext);
+  if (!context) {
+    throw new Error("useNavigation must be used within a NavigationProvider");
+  }
+  return context;
+};

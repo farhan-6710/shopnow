@@ -60,16 +60,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
         queryParams: {
-          prompt: "select_account", // force account picker every time
+          prompt: "select_account",
         },
+        skipBrowserRedirect: true, // This prevents automatic redirect
       },
     });
+
     if (error) throw error;
+
+    // Open OAuth URL in a centered popup window
+    if (data?.url) {
+      const width = 500;
+      const height = 600;
+      const left = window.screenX + (window.outerWidth - width) / 2;
+      const top = window.screenY + (window.outerHeight - height) / 2;
+
+      window.open(
+        data.url,
+        "google-oauth",
+        `width=${width},height=${height},left=${left},top=${top}`,
+      );
+    }
   };
 
   const signInWithEmail = async (email: string, password: string) => {

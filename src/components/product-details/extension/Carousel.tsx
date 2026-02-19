@@ -21,14 +21,6 @@ type CarouselContextType = {
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
-const useCarousel = () => {
-  const context = useContext(CarouselContext);
-  if (!context) {
-    throw new Error("useCarousel must be used within a CarouselProvider");
-  }
-  return context;
-};
-
 interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: "vertical" | "horizontal";
 }
@@ -92,6 +84,14 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   },
 );
 Carousel.displayName = "Carousel";
+
+const useCarousel = () => {
+  const context = useContext(CarouselContext);
+  if (!context) {
+    throw new Error("useCarousel must be used within a CarouselProvider");
+  }
+  return context;
+};
 
 const CarouselMainContainer = forwardRef<
   HTMLDivElement,
