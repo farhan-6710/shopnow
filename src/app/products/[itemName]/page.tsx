@@ -15,9 +15,7 @@ interface ProductDetailsPageProps {
   params: Promise<{ itemName: string }>;
 }
 
-const ProductDetailsPage = async ({
-  params,
-}: ProductDetailsPageProps) => {
+const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
   const { itemName } = await params;
   const product = await getProduct(itemName);
 
