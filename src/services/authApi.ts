@@ -1,11 +1,22 @@
 import { API_URL } from "@/constants/api";
 import { axiosInstance } from "./axiosInstance";
+export interface AuthResponse {
+  status: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    picture?: string;
+  };
+  token?: string;
+  error?: string;
+}
 
 export const authApi = {
   /**
    * Login user
    */
-  async login(email: string, password: string): Promise<unknown | any> {
+  async login(email: string, password: string): Promise<AuthResponse> {
     const response = await axiosInstance({
       method: API_URL.AUTH.LOGIN.type,
       url: API_URL.AUTH.LOGIN.url,
@@ -17,7 +28,11 @@ export const authApi = {
   /**
    * Signup user
    */
-  async signup(email: string, password: string, name: string): Promise<any> {
+  async signup(
+    email: string,
+    password: string,
+    name: string,
+  ): Promise<AuthResponse> {
     const response = await axiosInstance({
       method: API_URL.AUTH.SIGNUP.type,
       url: API_URL.AUTH.SIGNUP.url,
@@ -40,7 +55,7 @@ export const authApi = {
   /**
    * Get current auth user
    */
-  async me(): Promise<any> {
+  async me(): Promise<AuthResponse> {
     const response = await axiosInstance({
       method: API_URL.AUTH.ME.type,
       url: API_URL.AUTH.ME.url,

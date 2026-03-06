@@ -3,6 +3,7 @@ import { Product } from "@/types/product";
 import { ApiResponse, WishlistItemPayload } from "@/types/api";
 import { API_URL } from "@/constants/api";
 import { axiosInstance } from "./axiosInstance";
+import axios from "axios";
 
 /**
  * Wishlist API Service
@@ -36,9 +37,9 @@ export const wishlistApi = {
       if (!data.success) {
         throw new Error(data.error || "Failed to add to wishlist");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       // 409 = already exists, which is fine
-      if (error.response?.status !== 409) {
+      if (axios.isAxiosError(error) && error.response?.status !== 409) {
         throw new Error(
           error.response?.data?.error || "Failed to add to wishlist",
         );
