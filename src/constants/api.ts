@@ -1,7 +1,7 @@
 // src/constants/api.ts
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5001/api";
+  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5001";
 
 export const REQUEST_TYPE = {
   GET: "GET",
