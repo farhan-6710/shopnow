@@ -1,8 +1,8 @@
 // src/services/wishlistApi.ts
 import { Product } from "@/types/product";
 import { ApiResponse, WishlistItemPayload } from "@/types/api";
-
-const WISHLIST_ENDPOINT = "/api/wishlist";
+import { API_URL } from "@/constants/api";
+import { axiosInstance } from "./axiosInstance";
 
 /**
  * Wishlist API Service
@@ -13,8 +13,10 @@ export const wishlistApi = {
    * Fetch all wishlist items for the authenticated user
    */
   async fetch(): Promise<Product[]> {
-    const response = await fetch(WISHLIST_ENDPOINT);
-    const data: ApiResponse<Product[]> = await response.json();
+    const response = await axiosInstance.get<ApiResponse<Product[]>>(
+      API_URL.WISHLIST.url,
+    );
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to fetch wishlist");
     return data.data!;
@@ -25,15 +27,22 @@ export const wishlistApi = {
    */
   async addItem(productId: number): Promise<void> {
     const payload: WishlistItemPayload = { productId };
-    const response = await fetch(WISHLIST_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data: ApiResponse = await response.json();
-    // 409 = already exists, which is fine
-    if (!data.success && response.status !== 409) {
-      throw new Error(data.error || "Failed to add to wishlist");
+    try {
+      const response = await axiosInstance.post<ApiResponse>(
+        API_URL.WISHLIST.url,
+        payload,
+      );
+      const data = response.data;
+      if (!data.success) {
+        throw new Error(data.error || "Failed to add to wishlist");
+      }
+    } catch (error: any) {
+      // 409 = already exists, which is fine
+      if (error.response?.status !== 409) {
+        throw new Error(
+          error.response?.data?.error || "Failed to add to wishlist",
+        );
+      }
     }
   },
 
@@ -44,12 +53,11 @@ export const wishlistApi = {
     const payload: WishlistItemPayload[] = productIds.map((id) => ({
       productId: id,
     }));
-    const response = await fetch(WISHLIST_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.post<ApiResponse>(
+      API_URL.WISHLIST.url,
+      payload,
+    );
+    const data = response.data;
     if (!data.success) throw new Error(data.error || "Failed to sync wishlist");
   },
 
@@ -57,12 +65,13 @@ export const wishlistApi = {
    * Remove a single item from wishlist
    */
   async removeItem(productId: number): Promise<void> {
-    const response = await fetch(WISHLIST_ENDPOINT, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId }),
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.delete<ApiResponse>(
+      API_URL.WISHLIST.url,
+      {
+        data: { productId },
+      },
+    );
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to remove from wishlist");
   },
@@ -71,12 +80,13 @@ export const wishlistApi = {
    * Remove multiple items from wishlist (for sync)
    */
   async removeBulkItems(productIds: number[]): Promise<void> {
-    const response = await fetch(WISHLIST_ENDPOINT, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productIds }),
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.delete<ApiResponse>(
+      API_URL.WISHLIST.url,
+      {
+        data: { productIds },
+      },
+    );
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to bulk remove items");
   },
@@ -85,11 +95,10 @@ export const wishlistApi = {
    * Clear all wishlist items
    */
   async clearAll(): Promise<void> {
-    const response = await fetch(WISHLIST_ENDPOINT, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.delete<ApiResponse>(
+      API_URL.WISHLIST.url,
+    );
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to clear wishlist");
   },

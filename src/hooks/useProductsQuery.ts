@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/product";
+import { API_URL } from "@/constants/api";
+import { axiosInstance } from "@/services/axiosInstance";
 
 const fetchProductsApi = async (): Promise<Product[]> => {
-  const response = await fetch("/api/products");
-  const data = await response.json();
+  const response = await axiosInstance.get(API_URL.PRODUCTS.url);
+  const data = response.data;
   if (!data.success) throw new Error(data.error || "Failed to fetch products");
   return data.data;
 };

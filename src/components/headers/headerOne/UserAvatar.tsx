@@ -59,9 +59,7 @@ const UserAvatar = () => {
   };
 
   const getUserName = () => {
-    return (
-      user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User"
-    );
+    return user?.name || user?.email?.split("@")[0] || "User";
   };
 
   return (
@@ -74,7 +72,7 @@ const UserAvatar = () => {
           >
             <Avatar className="h-7 w-7">
               <AvatarImage
-                src={user?.user_metadata?.avatar_url}
+                src={undefined} // We don't have avatar_url in the new backend yet
                 alt={getUserName()}
               />
               <AvatarFallback className="bg-primary text-primary-foreground text-xs font-medium">
@@ -94,7 +92,7 @@ const UserAvatar = () => {
             <div className="flex items-center gap-3">
               <Avatar className="h-9 w-9">
                 <AvatarImage
-                  src={user?.user_metadata?.avatar_url}
+                  src={undefined} // We don't have avatar_url in the new backend yet
                   alt={getUserName()}
                 />
                 <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">

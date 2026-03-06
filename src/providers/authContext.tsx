@@ -1,14 +1,22 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { User, Session, AuthChangeEvent } from "@supabase/supabase-js";
-import { createClient } from "@/utils/supabase/client";
+import { Session } from "@supabase/supabase-js"; // Re-using User type for simplicity for now
 import { clearCartLocal } from "@/redux/slices/cartSlice";
 import { clearWishlistLocal } from "@/redux/slices/wishlistSlice";
 import { useDispatch } from "react-redux";
+import { authApi } from "@/services/authApi";
+import { setMemoryAuthStatus } from "@/utils/auth";
+import { API_URL } from "@/constants/api";
+
+interface AppUser {
+  id: string;
+  name: string;
+  email: string;
+}
 
 interface AuthContextType {
-  user: User | null;
+  user: AppUser | null;
   session: Session | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
@@ -25,75 +33,53 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const supabase = createClient();
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Get initial session
-    const getInitialSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    };
-
-    getInitialSession();
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(
-      async (event: AuthChangeEvent, session: Session | null) => {
-        setSession(session);
-        setUser(session?.user ?? null);
+    const fetchUser = async () => {
+      try {
+        const data = await authApi.me();
+        if (data.status === "success") {
+          setUser({
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+          });
+          setSession({ user: data.user } as unknown as Session);
+          setMemoryAuthStatus(true);
+        } else {
+          setMemoryAuthStatus(false);
+        }
+      } catch {
+        console.error("No active session or failed to fetch user");
+        setMemoryAuthStatus(false);
+      } finally {
         setLoading(false);
-      },
-    );
-
-    return () => subscription.unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      }
+    };
+    fetchUser();
   }, []);
 
   const signInWithGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-        queryParams: {
-          prompt: "select_account",
-        },
-        skipBrowserRedirect: true, // This prevents automatic redirect
-      },
-    });
-
-    if (error) throw error;
-
-    // Open OAuth URL in a centered popup window
-    if (data?.url) {
-      const width = 500;
-      const height = 600;
-      const left = window.screenX + (window.outerWidth - width) / 2;
-      const top = window.screenY + (window.outerHeight - height) / 2;
-
-      window.open(
-        data.url,
-        "google-oauth",
-        `width=${width},height=${height},left=${left},top=${top}`,
-      );
-    }
+    window.location.href = API_URL.AUTH.GOOGLE_INIT.url;
   };
 
   const signInWithEmail = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) throw error;
+    const data = await authApi.login(email, password);
+    if (data.status === "success") {
+      setUser({
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+      });
+      setSession({ user: data.user } as unknown as Session);
+      setMemoryAuthStatus(true);
+    } else {
+      throw new Error(data.error || "Login failed");
+    }
   };
 
   const signUpWithEmail = async (
@@ -101,32 +87,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
     fullName: string,
   ) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-        },
-      },
-    });
-    if (error) throw error;
+    const data = await authApi.signup(email, password, fullName);
+    if (data.status === "success") {
+      setUser({
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+      });
+      setSession({ user: data.user } as unknown as Session);
+      setMemoryAuthStatus(true);
+    } else {
+      throw new Error(data.error || "Signup failed");
+    }
   };
 
   const signOut = async () => {
     // Clear cart and wishlist locally BEFORE signing out to prevent API calls with invalid tokens
     if (typeof window !== "undefined") {
-      // Clear Redux store in memory (local only - no API call)
       dispatch(clearCartLocal());
       dispatch(clearWishlistLocal());
-
-      // Clear persisted data from localStorage
       localStorage.removeItem("persist:root");
     }
 
-    // Sign out from Supabase - don't throw error if it fails (session might already be invalid)
-    // Always succeed locally regardless of server-side result
-    await supabase.auth.signOut();
+    try {
+      await authApi.logout();
+    } catch (e) {
+      console.error("Logout API failed, but clearing local state anyway.", e);
+    } finally {
+      setUser(null);
+      setSession(null);
+      setMemoryAuthStatus(false);
+    }
   };
 
   const value = {

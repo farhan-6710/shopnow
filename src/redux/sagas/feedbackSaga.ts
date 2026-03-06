@@ -11,14 +11,12 @@ import { isAuthenticated } from "@/utils/auth";
 
 // API function
 const submitFeedbackApi = async (payload: SubmitFeedbackPayload) => {
-  const response = await fetch("/api/feedback", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  const data = await response.json();
+  const { API_URL } = await import("@/constants/api");
+  const { axiosInstance } = await import("@/services/axiosInstance");
+
+  const response = await axiosInstance.post(API_URL.FEEDBACK.url, payload);
+  const data = response.data;
+
   if (!data.success) {
     throw new Error(data.error || "Failed to submit feedback");
   }

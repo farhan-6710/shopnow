@@ -1,8 +1,8 @@
 // src/services/cartApi.ts
 import { CartItem } from "@/types/cartItems";
 import { ApiResponse, BulkCartItemPayload, CartItemPayload } from "@/types/api";
-
-const CART_ENDPOINT = "/api/cart";
+import { API_URL } from "@/constants/api";
+import { axiosInstance } from "./axiosInstance";
 
 /**
  * Cart API Service
@@ -13,8 +13,10 @@ export const cartApi = {
    * Fetch all cart items for the authenticated user
    */
   async fetch(): Promise<CartItem[]> {
-    const response = await fetch(CART_ENDPOINT);
-    const data: ApiResponse<CartItem[]> = await response.json();
+    const response = await axiosInstance.get<ApiResponse<CartItem[]>>(
+      API_URL.CART.url,
+    );
+    const data = response.data;
     if (!data.success) throw new Error(data.error || "Failed to fetch cart");
     return data.data!;
   },
@@ -24,12 +26,11 @@ export const cartApi = {
    */
   async addItem(productId: number, quantity: number = 1): Promise<void> {
     const payload: CartItemPayload = { productId, quantity };
-    const response = await fetch(CART_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.post<ApiResponse>(
+      API_URL.CART.url,
+      payload,
+    );
+    const data = response.data;
     if (!data.success) throw new Error(data.error || "Failed to add to cart");
   },
 
@@ -37,12 +38,11 @@ export const cartApi = {
    * Add multiple items to cart (for sync)
    */
   async addBulkItems(items: BulkCartItemPayload[]): Promise<void> {
-    const response = await fetch(CART_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(items),
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.post<ApiResponse>(
+      API_URL.CART.url,
+      items,
+    );
+    const data = response.data;
     if (!data.success) throw new Error(data.error || "Failed to sync cart");
   },
 
@@ -51,12 +51,11 @@ export const cartApi = {
    */
   async updateQuantity(productId: number, quantity: number): Promise<void> {
     const payload: CartItemPayload = { productId, quantity };
-    const response = await fetch(CART_ENDPOINT, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.put<ApiResponse>(
+      API_URL.CART.url,
+      payload,
+    );
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to update quantity");
   },
@@ -65,12 +64,10 @@ export const cartApi = {
    * Remove a single item from cart
    */
   async removeItem(productId: number): Promise<void> {
-    const response = await fetch(CART_ENDPOINT, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId }),
+    const response = await axiosInstance.delete<ApiResponse>(API_URL.CART.url, {
+      data: { productId },
     });
-    const data: ApiResponse = await response.json();
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to remove from cart");
   },
@@ -79,12 +76,10 @@ export const cartApi = {
    * Remove multiple items from cart (for sync)
    */
   async removeBulkItems(productIds: number[]): Promise<void> {
-    const response = await fetch(CART_ENDPOINT, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productIds }),
+    const response = await axiosInstance.delete<ApiResponse>(API_URL.CART.url, {
+      data: { productIds },
     });
-    const data: ApiResponse = await response.json();
+    const data = response.data;
     if (!data.success)
       throw new Error(data.error || "Failed to bulk remove items");
   },
@@ -93,11 +88,8 @@ export const cartApi = {
    * Clear all cart items
    */
   async clearAll(): Promise<void> {
-    const response = await fetch(CART_ENDPOINT, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    const data: ApiResponse = await response.json();
+    const response = await axiosInstance.delete<ApiResponse>(API_URL.CART.url);
+    const data = response.data;
     if (!data.success) throw new Error(data.error || "Failed to clear cart");
   },
 };
