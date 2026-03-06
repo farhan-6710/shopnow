@@ -13,6 +13,7 @@ interface AppUser {
   id: string;
   name: string;
   email: string;
+  picture: string;
 }
 
 interface AuthContextType {
@@ -47,6 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             id: data.user.id,
             name: data.user.name,
             email: data.user.email,
+            picture: data.user.picture,
           });
           setSession({ user: data.user } as unknown as Session);
           setMemoryAuthStatus(true);
@@ -54,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setMemoryAuthStatus(false);
         }
       } catch {
-        console.error("No active session or failed to fetch user");
+        // 401 is expected when user is not logged in — not an error
         setMemoryAuthStatus(false);
       } finally {
         setLoading(false);
@@ -74,6 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         id: data.user.id,
         name: data.user.name,
         email: data.user.email,
+        picture: data.user.picture,
       });
       setSession({ user: data.user } as unknown as Session);
       setMemoryAuthStatus(true);
@@ -93,6 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         id: data.user.id,
         name: data.user.name,
         email: data.user.email,
+        picture: data.user.picture,
       });
       setSession({ user: data.user } as unknown as Session);
       setMemoryAuthStatus(true);

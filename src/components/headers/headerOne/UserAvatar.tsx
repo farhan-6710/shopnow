@@ -25,6 +25,8 @@ import { Button } from "@/components/ui/button";
 
 const UserAvatar = () => {
   const { user, signOut } = useAuth();
+
+  console.log(user)
   const [showSignOutModal, setShowSignOutModal] = useState(false);
 
   const handleSignOutConfirm = async () => {
@@ -72,7 +74,7 @@ const UserAvatar = () => {
           >
             <Avatar className="h-7 w-7">
               <AvatarImage
-                src={undefined} // We don't have avatar_url in the new backend yet
+                src={user?.picture} // We don't have avatar_url in the new backend yet
                 alt={getUserName()}
               />
               <AvatarFallback className="bg-primary text-primary-foreground text-xs font-medium">
@@ -92,7 +94,7 @@ const UserAvatar = () => {
             <div className="flex items-center gap-3">
               <Avatar className="h-9 w-9">
                 <AvatarImage
-                  src={undefined} // We don't have avatar_url in the new backend yet
+                  src={user?.picture} // We don't have avatar_url in the new backend yet
                   alt={getUserName()}
                 />
                 <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
