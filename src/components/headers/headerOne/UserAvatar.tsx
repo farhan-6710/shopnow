@@ -26,7 +26,6 @@ import { Button } from "@/components/ui/button";
 const UserAvatar = () => {
   const { user, signOut } = useAuth();
 
-  console.log(user)
   const [showSignOutModal, setShowSignOutModal] = useState(false);
 
   const handleSignOutConfirm = async () => {
