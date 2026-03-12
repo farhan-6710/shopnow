@@ -44,8 +44,8 @@ The application is engineered to handle large product datasets efficiently using
 - **Modal-Based Authentication**  
   Login and signup flows are handled via accessible modals, preserving user context without page redirects.
 
-- **Supabase Integration**  
-  Secure authentication and user management using Supabase Auth.
+- **Custom JWT Authentication**  
+  Secure authentication using JWT tokens stored in HttpOnly cookies, with password hashing via bcryptjs.
 
 - **Automatic Data Synchronization**  
   Guest cart and wishlist data are automatically merged with persistent backend data when a user logs in.
@@ -60,8 +60,8 @@ The application is engineered to handle large product datasets efficiently using
 - **Loading Skeletons**  
   Improve perceived performance during data fetching.
 
-- **Next.js API Routes**  
-  Serve as the backend layer for business logic and database communication.
+- **Express.js Backend APIs**  
+  RESTful API endpoints handle business logic and database operations with Prisma ORM.
 
 ---
 
@@ -79,12 +79,14 @@ The application is engineered to handle large product datasets efficiently using
 
 - **Global State:** Redux Toolkit
 - **Side Effects:** Redux Saga (optimistic updates, async flows, error handling)
+- **API Communication:** Axios with credentials support for JWT cookies
 
 ### Backend & Database
 
-- **API Layer:** Next.js API Routes
-- **Database:** Supabase (PostgreSQL)
-- **Authentication:** Supabase Auth
+- **API Layer:** Express.js with TypeScript
+- **Database:** Neon DB (PostgreSQL)
+- **ORM:** Prisma
+- **Authentication:** Custom JWT-based (bcryptjs, jsonwebtoken, HttpOnly cookies)
 
 ---
 
@@ -93,12 +95,12 @@ The application is engineered to handle large product datasets efficiently using
 ### Optimistic UI with Redux Saga
 
 1. User triggers an action (e.g., _Add to Cart_).
-2. Redux updates the UI immediately.
-3. A Redux Saga handles the API request in the background.
-4. On success, the state is confirmed; on failure, changes are rolled back and an error toast is shown.
+2. Redux updates the UI immediately.to the Express backend in the background.
+3. On success, the state is confirmed; on failure, changes are rolled back and an error toast is shown.
 
 ### Authentication Flow
 
+Authentication is handled via modals with JWT tokens stored in HttpOnly cookies. Users can sign in or sign up without losing their current browsing context. API requests automatically include credentials via Axios configuration
 Authentication is handled via modals instead of full-page redirects, allowing users to sign in or sign up without losing their current browsing context.
 
 ---
@@ -110,12 +112,7 @@ Authentication is handled via modals instead of full-page redirects, allowing us
 │   └── images/                # Image assets & product images
 ├── scripts/                   # Database scripts & seed data
 └── src/
-    ├── app/                   # Next.js App Router
-    │   ├── api/               # Backend API Routes
-    │   │   ├── cart/          # Cart API endpoints
-    │   │   ├── feedback/      # Feedback API endpoints
-    │   │   ├── products/      # Products API endpoints
-    │   │   └── wishlist/      # Wishlist API endpoints
+    ├── app/                   # (Legacy - migrated to Express backend)
     │   ├── auth/              # Auth pages & callback handler
     │   ├── cart/              # Cart page
     │   ├── products/          # Product pages
@@ -144,12 +141,12 @@ Authentication is handled via modals instead of full-page redirects, allowing us
     │   ├── wishlist/          # Wishlist state
     │   ├── slices/            # Redux slices
     │   └── sagas/             # Redux sagas
-    ├── services/              # API service layer
+    ├── services/              # API service layer (Axios)
     ├── styles/                # Global styles
     ├── types/                 # TypeScript types
     └── utils/                 # Utility functions
         ├── products/          # Product utilities
-        ├── redux/             # Redux utilities
+        └── redux/             # Reduxilities
         └── supabase/          # Supabase utilities
 ```
 
