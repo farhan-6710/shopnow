@@ -10,7 +10,7 @@ import { DataSyncProvider } from "./DataSyncProvider";
 import { WindowOpener } from "@/components/home/WindowOpener";
 import NavigationProvider from "./NavigationProvider";
 
-export default function ReduxProvider({
+export default function AppProviders({
   children,
 }: {
   children: React.ReactNode;

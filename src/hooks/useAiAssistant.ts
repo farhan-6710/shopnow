@@ -137,7 +137,7 @@ export const useAiAssistant = ({
               "X-Title": "Shop Now AI Assistant",
             },
             body: JSON.stringify({
-              model: "tngtech/deepseek-r1t2-chimera:free",
+              model: "stepfun/step-3.5-flash:free",
               messages: [
                 ...(context
                   ? [
@@ -146,7 +146,7 @@ export const useAiAssistant = ({
                         content: `You are a helpful shopping assistant for an e-commerce store. Here are the available products you can help customers with:\n\n${JSON.stringify(
                           context,
                           null,
-                          2
+                          2,
                         )}\n\nUse this information to answer customer questions about products, prices, availability, and recommendations. Be friendly and helpful.`,
                       },
                     ]
@@ -158,7 +158,7 @@ export const useAiAssistant = ({
                 { role: "user", content: userMessage.content },
               ],
             }),
-          }
+          },
         );
 
         if (!response.ok) {
@@ -166,7 +166,7 @@ export const useAiAssistant = ({
           throw new Error(
             `API Error ${response.status}: ${
               errorData.error?.message || response.statusText
-            }`
+            }`,
           );
         }
 
