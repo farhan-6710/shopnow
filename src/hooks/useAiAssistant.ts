@@ -137,7 +137,9 @@ export const useAiAssistant = ({
               "X-Title": "Shop Now AI Assistant",
             },
             body: JSON.stringify({
-              model: "stepfun/step-3.5-flash:free",
+              model:
+                process.env.NEXT_PUBLIC_OPENROUTER_MODEL ||
+                "nvidia/nemotron-3-super-120b-a12b:free",
               messages: [
                 ...(context
                   ? [
