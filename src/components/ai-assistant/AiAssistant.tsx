@@ -51,6 +51,7 @@ const AiAssistant = ({
         className,
       )}
     >
+      
       <AiAssistantHeader title={title} isLoading={isLoading} />
 
       <AiAssistantChatArea
