@@ -34,6 +34,7 @@ export default function AppProviders({
           </ThemeProvider>
         </ReactQueryProvider>
       </PersistGate>
+      
     </Provider>
   );
 }
