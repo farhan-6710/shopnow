@@ -1,5 +1,6 @@
 import { Product } from "@/types/product";
-import { createClient } from "@/utils/supabase/client";
+import { API_URL } from "@/constants/api";
+import { axiosInstance } from "@/services/axiosInstance";
 
 export type ProductTag =
   | "bestseller"
@@ -124,7 +125,7 @@ export const getProductTags = (
   item: Product,
   isInCart: boolean,
   theme: "light" | "dark" = "light",
-  limit: number = Infinity
+  limit: number = Infinity,
 ): ProductTagConfig[] => {
   const palette = TAG_STYLES[theme];
 
@@ -153,16 +154,21 @@ export const getProductTags = (
  * @returns Product data or null
  */
 export async function getProduct(itemName: string): Promise<Product | null> {
-  const supabase = createClient();
-  const decodedName = decodeURIComponent(itemName);
+  try {
+    const encodedName = encodeURIComponent(decodeURIComponent(itemName));
+    const response = await axiosInstance.get(
+      `${API_URL.PRODUCTS.url}/${encodedName}`,
+    );
+    const data = response.data;
 
-  const { data } = await supabase
-    .from("products")
-    .select("*")
-    .ilike("name", decodedName)
-    .single();
+    if (!data?.success) {
+      return null;
+    }
 
-  return data;
+    return data.data as Product;
+  } catch (error) {
+    return null;
+  }
 }
 
 /**
@@ -171,7 +177,12 @@ export async function getProduct(itemName: string): Promise<Product | null> {
  * @returns Array of product names
  */
 export async function getAllProductNames(): Promise<{ name: string }[]> {
-  const supabase = createClient();
-  const { data } = await supabase.from("products").select("name");
-  return data || [];
+  const response = await axiosInstance.get(`${API_URL.PRODUCTS.url}/names`);
+  const data = response.data;
+
+  if (!data?.success) {
+    return [];
+  }
+
+  return data.data || [];
 }
