@@ -177,12 +177,16 @@ export async function getProduct(itemName: string): Promise<Product | null> {
  * @returns Array of product names
  */
 export async function getAllProductNames(): Promise<{ name: string }[]> {
-  const response = await axiosInstance.get(`${API_URL.PRODUCTS.url}/names`);
-  const data = response.data;
+  try {
+    const response = await axiosInstance.get(`${API_URL.PRODUCTS.url}/names`);
+    const data = response.data;
 
-  if (!data?.success) {
+    if (!data?.success) {
+      return [];
+    }
+
+    return data.data || [];
+  } catch (error) {
     return [];
   }
-
-  return data.data || [];
 }
