@@ -40,7 +40,6 @@ const TAG_STYLES: Record<
       },
     },
 
-    
     trending: {
       label: "Trending",
       style: {
