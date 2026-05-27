@@ -11,6 +11,7 @@ import ProductsGrid from "@/components/home/products-grid/ProductsGrid";
 const HomePage = () => {
   const { products, isLoading, isFetching, error } = useProductsQuery();
 
+  
   const {
     filteredProducts,
     filterValues,
