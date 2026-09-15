@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "ShopNow" }],
   icons: {
-    icon: "/images/favicon.ico",
+    icon: "/images/brand/favicon.ico",
   },
   openGraph: {
     type: "website",

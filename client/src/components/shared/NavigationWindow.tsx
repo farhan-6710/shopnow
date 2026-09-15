@@ -111,7 +111,7 @@ export const NavigationWindow = ({ isNavigating }: NavigationWindowProps) => {
                 width={1024}
                 height={1024}
                 alt="logo"
-                src="/images/shopnow-favicon.png"
+                src="/images/brand/shopnow-favicon.png"
                 className="w-60 h-60 object-contain"
                 loading="eager"
                 fetchPriority="high"

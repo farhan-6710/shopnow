@@ -43,7 +43,7 @@ const Footer = () => {
             aria-label="Back to home"
           >
             <Image
-              src="/images/logo-light.png"
+              src="/images/brand/logo-light.png"
               alt="SHOPNOW Logo"
               width={256}
               height={55}
@@ -51,7 +51,7 @@ const Footer = () => {
               priority
             />
             <Image
-              src="/images/logo-dark.png"
+              src="/images/brand/logo-dark.png"
               alt="SHOPNOW Logo"
               width={256}
               height={55}

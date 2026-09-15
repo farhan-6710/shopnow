@@ -52,7 +52,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       >
         <div className="flex items-center justify-center bg-background py-10 px-3">
           <Image
-            src="/images/logo-light.png"
+            src="/images/brand/logo-light.png"
             alt="Logo"
             width={220}
             height={47}
@@ -61,7 +61,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             className="block dark:hidden"
           />
           <Image
-            src="/images/logo-dark.png"
+            src="/images/brand/logo-dark.png"
             alt="Logo"
             width={220}
             height={47}

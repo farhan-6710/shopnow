@@ -25,7 +25,7 @@ const PaymentMethods = () => {
       <h3 className="text-lg font-semibold mb-3">Payment Methods</h3>
       <div className="w-full border rounded-md overflow-hidden bg-background">
         <Image
-          src="/images/payments2.png"
+          src="/images/payments/payments2.png"
           alt="Payment Methods"
           width={800}
           height={400}

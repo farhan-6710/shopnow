@@ -32,7 +32,7 @@ const Logo = ({ onMenuClick }: LogoProps) => {
         aria-label="Go to homepage"
       >
         <Image
-          src="/images/logo-light.png"
+          src="/images/brand/logo-light.png"
           alt="ShopNow"
           width={187}
           height={40}
@@ -40,7 +40,7 @@ const Logo = ({ onMenuClick }: LogoProps) => {
           className="block dark:hidden h-10 w-auto"
         />
         <Image
-          src="/images/logo-dark.png"
+          src="/images/brand/logo-dark.png"
           alt="ShopNow"
           width={187}
           height={40}

@@ -1,4 +1,4 @@
-![ShopNow Banner](./client/public/images/app-screenshot.png)
+![ShopNow Banner](./client/public/images/banners/app-screenshot.png)
 
 # ShopNow
 

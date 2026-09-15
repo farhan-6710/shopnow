@@ -95,7 +95,7 @@ export const WindowOpener = ({ children }: { children: React.ReactNode }) => {
                   width={1024}
                   height={1024}
                   alt="logo"
-                  src="/images/shopnow-favicon.png"
+                  src="/images/brand/shopnow-favicon.png"
                   className="w-60 h-60 object-contain"
                   priority
                   loading="eager"

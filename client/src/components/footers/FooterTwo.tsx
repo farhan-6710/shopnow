@@ -12,7 +12,7 @@ const FooterTwo = () => {
         {/* Right Column: PAYMENT APPS */}
         <div className="w-auto flex items-center justify-center">
           <Image
-            src="/images/payments.png"
+            src="/images/payments/payments.png"
             alt="Payments"
             width={380} // Set width directly
             height={64} // Set height directly
