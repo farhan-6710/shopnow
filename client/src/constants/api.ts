@@ -19,10 +19,12 @@ export const API_URL = {
   // Cart
   CART: {
     url: BASE_URL + "/cart",
+    type: REQUEST_TYPE.GET,
   },
   // Wishlist
   WISHLIST: {
     url: BASE_URL + "/wishlist",
+    type: REQUEST_TYPE.GET,
   },
   // Feedback
   FEEDBACK: {
