@@ -4,7 +4,7 @@ Shared product and data: [PRD](../PRD.md) · [DATABASE](../DATABASE.md) · [RULE
 
 ## Stack
 
-Express 5.2, TypeScript 5.9 (CommonJS, `strict`), Prisma 7.4 with `@prisma/adapter-pg`, Neon PostgreSQL, JWT in an HttpOnly cookie (`jsonwebtoken` 9, `cookie-parser`), `bcryptjs` 3, Google OAuth (`google-auth-library` 10), `cors`, `dotenv`. Dev tools: `nodemon`, `ts-node`, ESLint 10, Prettier 3, Jest 30 with `ts-jest`. The package name in `package.json` is `backend-course`.
+Express 5.2, TypeScript 5.9 (CommonJS, `strict`), Prisma 7.4 with `@prisma/adapter-pg`, Neon PostgreSQL, JWT in an HttpOnly cookie (`jsonwebtoken` 9, `cookie-parser`), `bcryptjs` 3, Google OAuth (`google-auth-library` 10), `cors`, `dotenv`. Dev tools: `nodemon`, `ts-node`, ESLint 10 (flat config `eslint.config.mjs` with `typescript-eslint`), Prettier 3, Jest 30 with `ts-jest`. The package name in `package.json` is `backend-course`.
 
 ## Folders
 

@@ -6,6 +6,8 @@ Product: [PRD](../PRD.md) · Structure: [ARCHITECTURE](./ARCHITECTURE.md).
 
 ## Done
 
+- [x] `npm run lint` works: `eslint.config.mjs` flat config with `@eslint/js` and `typescript-eslint` (same as HireHub); six lint errors fixed without behaviour changes. The old `.eslintrc.js` is ignored by ESLint 10 and can be deleted
+
 Derived from `git log` and the code.
 
 - [x] Express API in TypeScript with a health route
@@ -24,7 +26,6 @@ Derived from `git log` and the code.
 
 ## Later
 
-- [ ] Fix `npm run lint`: ESLint 10 ignores `.eslintrc.js`; it needs an `eslint.config.mjs` flat config
 - [ ] Clear the logout cookie with the same options it was set with (`sameSite: 'none'` in production); it uses `strict` today, which can leave the cookie in place across sites
 - [ ] Remove the `DEBUG_OAUTH_ENV` console log in `googleAuthInit`; it prints the OAuth client id
 - [ ] The `googleAuth.ts` fallback redirect URL says `/api/auth/google/callback`, which is not a route; correct it to `/auth/google/callback`

@@ -22,6 +22,6 @@ Shared rules: [docs/RULES.md](../RULES.md). Product: [PRD](../PRD.md) · Data: [
 
 ## Working
 
-- Before finishing: `npm run build` (runs `prisma generate` and `tsc`) passes. `npm run lint` is currently broken (see [TASKS](./TASKS.md)); run `npx tsc --noEmit` meanwhile.
+- Before finishing: `npm run build` (runs `prisma generate` and `tsc`) passes. `npm run lint` and `npx tsc --noEmit` pass too.
 - Jest is configured and matches `**/tests/**/*.test.(ts|js)`; there are no tests yet. Add tests only under a `tests/` folder.
 - Update [TASKS](./TASKS.md) and [MEMORY](./MEMORY.md) when work lands.

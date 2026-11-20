@@ -4,6 +4,7 @@ import crypto from 'crypto';
 import { generateToken, AUTH_COOKIE_NAME } from '../utils/generateToken';
 import { Request, Response } from 'express';
 import { googleClient } from '../utils/googleAuth';
+import { AuthRequest } from '../middlewares/authMiddleware';
 
 const signup = async (req: Request, res: Response) => {
   try {
@@ -131,7 +132,7 @@ const logout = async (req: Request, res: Response) => {
   });
 };
 
-const getMe = async (req: any, res: Response) => {
+const getMe = async (req: AuthRequest, res: Response) => {
   // req.user is populated by the protect middleware
   const user = req.user;
 

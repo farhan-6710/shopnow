@@ -10,7 +10,7 @@ export const errorHandler = (
   err: AppError,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction // Express only treats a four-argument middleware as an error handler.
 ) => {
   console.error(err);
   res.status(err.status || 500).json({

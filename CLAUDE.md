@@ -63,7 +63,7 @@ Scripts are run with npm (both packages also have `bun.lock`).
 | --- | --- | --- |
 | Install | `npm install` | `npm install` |
 | Dev | `npm run dev` (port 3000) | `npm run dev` (port 5001) |
-| Lint | `npm run lint` | `npm run lint` (broken: ESLint 10 needs a flat config) |
+| Lint | `npm run lint` | `npm run lint` (ESLint 10, `eslint.config.mjs` + `typescript-eslint`) |
 | Type-check | `npx tsc --noEmit` | `npx tsc --noEmit` |
 | Build | `npm run build` | `npm run build` (`prisma generate` + `tsc`) |
 | Test | none | `npm test` (Jest, no tests yet) |

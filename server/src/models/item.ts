@@ -3,4 +3,4 @@ export interface Item {
   name: string;
 }
 
-export let items: Item[] = [];
+export const items: Item[] = [];
