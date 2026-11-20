@@ -1,6 +1,7 @@
 "use client";
 
 import { BotIcon } from "lucide-react";
+import { brand } from "@/constants/brand";
 
 const AiAssistantWelcome = () => {
   return (
@@ -9,7 +10,7 @@ const AiAssistantWelcome = () => {
         <BotIcon className="w-8 h-8 text-primary" />
       </div>
       <h3 className="text-lg font-semibold text-foreground mb-2">
-        Welcome to ShopNow Assistant
+        Welcome to {brand.assistant.name}
       </h3>
       <p className="text-sm text-muted-foreground max-w-sm">
         I&apos;m here to help you find exactly what you&apos;re looking for. Ask

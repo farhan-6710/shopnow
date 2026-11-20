@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import Modal from "../modals/Modal";
 import dynamic from "next/dynamic";
 import FeedbackFormSkeleton from "@/components/skeletons/FeedbackFormSkeleton";
+import { brand } from "@/constants/brand";
 
 const FeedbackForm = dynamic(
   () => import("@/components/ai-assistant/FeedbackForm"),
@@ -85,7 +86,7 @@ const AiAssistantFeedback = () => {
         open={isFeedbackModalOpen}
         onOpenChange={setIsFeedbackModalOpen}
         title="Feedback"
-        description="Help us improve your experience with ShopNow Assistant"
+        description={`Help us improve your experience with ${brand.assistant.name}`}
         className="max-w-md"
       >
         <FeedbackForm

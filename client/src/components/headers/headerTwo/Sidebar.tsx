@@ -4,6 +4,7 @@ import Image from "next/image";
 import { MapPin, Mail, Phone, Linkedin } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import HeaderActions from "./HeaderActions";
+import { brand, mailtoHref } from "@/constants/brand";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -72,9 +73,9 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </div>
         <hr className="border mb-2" />
         <div className="p-4 px-6 mb-4">
-          <h2 className="text-lg font-semibold">About SHOPNOW</h2>
+          <h2 className="text-lg font-semibold">About {brand.name}</h2>
           <p className="mt-2 text-xs">
-            SHOPNOW offers a wide range of branded t-shirts, shoes, and more.
+            {brand.name} offers a wide range of branded t-shirts, shoes, and more.
             Our mission is to provide high-quality products with exceptional
             customer service. Explore our collection and find your style today!
           </p>
@@ -96,10 +97,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 size={16}
               />
               <a
-                href="mailto:contact@shopnow.com"
+                href={mailtoHref}
                 className="text-sm hover:underline"
               >
-                contact@shopnow.com
+                {brand.contact.email}
               </a>
             </li>
             <li className="flex items-center space-x-2">

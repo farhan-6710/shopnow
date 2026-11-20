@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useNavigation } from "@/providers/NavigationProvider";
+import { brand } from "@/constants/brand";
 
 interface LogoProps {
   onMenuClick: () => void;
@@ -33,7 +34,7 @@ const Logo = ({ onMenuClick }: LogoProps) => {
       >
         <Image
           src="/images/brand/logo-light.png"
-          alt="ShopNow"
+          alt={brand.name}
           width={187}
           height={40}
           priority
@@ -41,7 +42,7 @@ const Logo = ({ onMenuClick }: LogoProps) => {
         />
         <Image
           src="/images/brand/logo-dark.png"
-          alt="ShopNow"
+          alt={brand.name}
           width={187}
           height={40}
           priority

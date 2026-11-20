@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import { brand } from "@/constants/brand";
 
 const Footer = () => {
   const router = useRouter();
@@ -44,7 +45,7 @@ const Footer = () => {
           >
             <Image
               src="/images/brand/logo-light.png"
-              alt="SHOPNOW Logo"
+              alt={`${brand.name} logo`}
               width={256}
               height={55}
               className="logo-image block dark:hidden"
@@ -52,7 +53,7 @@ const Footer = () => {
             />
             <Image
               src="/images/brand/logo-dark.png"
-              alt="SHOPNOW Logo"
+              alt={`${brand.name} logo`}
               width={256}
               height={55}
               className="logo-image hidden dark:block"
@@ -60,7 +61,7 @@ const Footer = () => {
             />
           </button>
           <p className="text-sm mt-6 mb-4">
-            At SHOPNOW, we offer an extensive selection of branded clothing,
+            At {brand.name}, we offer an extensive selection of branded clothing,
             bags, shoes, accessories, purses, and sandals. Whether you&apos;re
             looking for the latest fashion trends or timeless classics,
           </p>
@@ -79,7 +80,7 @@ const Footer = () => {
             pride ourselves on delivering high-quality products paired with
             exceptional customer service. Discover your next favorite piece with
             us and elevate your wardrobe today! Join our community of fashion
-            enthusiasts and stay ahead of the trends with SHOPNOW.
+            enthusiasts and stay ahead of the trends with {brand.name}.
           </p>
         </section>
 
@@ -98,7 +99,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center">
               <FaEnvelope className="mr-2" />
-              <span>contact@shopnow.com</span>
+              <span>{brand.contact.email}</span>
             </div>
             <div className="flex items-center">
               <FaPhone className="mr-2" />

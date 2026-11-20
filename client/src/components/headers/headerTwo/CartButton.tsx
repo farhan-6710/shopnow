@@ -7,6 +7,7 @@ import Link from "next/link";
 import Sheet from "@/components/shared/Sheet";
 import AiAssistant from "@/components/ai-assistant/AiAssistant";
 import { useProductsQuery } from "@/hooks/useProductsQuery";
+import { brand } from "@/constants/brand";
 
 interface CartButtonProps {
   cartCount: number;
@@ -55,7 +56,7 @@ const CartButton = ({ cartCount, onClose }: CartButtonProps) => {
       >
         <AiAssistant
           className="h-full border-0 rounded-none shadow-none"
-          title="ShopNow Assistant"
+          title={brand.assistant.name}
           placeholder="Ask about products, orders, or anything..."
           context={productsFromApiRes}
         />

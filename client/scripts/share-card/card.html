@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- 1200x630 share card. Rendered to public/brand/share-card.jpg by scripts/share-card/render.sh. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Convergence&family=Inter:wght@500;600&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #fba101;
+        --charcoal: #121212;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--charcoal); }
+      .card {
+        position: relative; width: 1200px; height: 630px; color: #fff; overflow: hidden;
+        background: linear-gradient(120deg, #121212 0%, #1b1b1b 60%, #161616 100%);
+      }
+      .glow {
+        position: absolute; right: -80px; top: -40px; width: 780px; height: 780px; border-radius: 50%;
+        background: radial-gradient(circle, rgb(251 161 1 / 0.34) 0%, rgb(251 161 1 / 0.1) 45%, rgb(251 161 1 / 0) 70%);
+      }
+      .copy { position: absolute; left: 72px; top: 64px; width: 600px; }
+      .logo { height: 62px; }
+      h1 {
+        margin-top: 52px; font: 400 82px/1.04 "Convergence", sans-serif; letter-spacing: -0.01em;
+      }
+      h1 em { font-style: normal; color: var(--primary); }
+      .rule { width: 72px; height: 5px; margin-top: 30px; background: var(--primary); border-radius: 3px; }
+      .lead { margin-top: 26px; font: 500 27px/1.45 "Inter", sans-serif; color: #d4d4d4; }
+      .shoe { position: absolute; filter: drop-shadow(0 30px 30px rgb(0 0 0 / 0.55)); }
+      .shoe.back { right: 70px; top: 80px; width: 400px; transform: rotate(-4deg); }
+      .shoe.front { right: 110px; top: 250px; width: 480px; transform: rotate(-7deg); }
+      .bar {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 64px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 72px; background: var(--primary); color: var(--charcoal);
+        font: 600 24px "Inter", sans-serif; letter-spacing: 0.04em;
+      }
+      .bar span:last-child { font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; font-size: 20px; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="glow"></div>
+
+      <img class="shoe back" src="../../public/images/products/img-3.png" alt="" />
+      <img class="shoe front" src="../../public/images/products/img-2.png" alt="" />
+
+      <div class="copy">
+        <img class="logo" src="../../public/images/brand/logo-dark.png" alt="" />
+        <h1>Premium<br />Branded <em>Shoes</em></h1>
+        <div class="rule"></div>
+        <p class="lead">Top brands. Latest styles.<br />Everyday comfort.</p>
+      </div>
+
+      <div class="bar"><span>shopnow-lilac.vercel.app</span><span>Sneakers &middot; Style &middot; Yours</span></div>
+    </div>
+  </body>
+</html>

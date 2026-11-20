@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "bun run scripts/seed-products.ts"
+    "seed": "bun run scripts/seed-products.ts",
+    "share-card": "bash scripts/share-card/render.sh"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",

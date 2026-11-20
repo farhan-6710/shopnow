@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 import { Inter, Convergence } from "next/font/google";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import LayoutClient from "./LayoutClient";
+import { rootMetadata, rootViewport, storeJsonLd } from "@/lib/seo";
 
 config.autoAddCss = false;
 
@@ -15,36 +16,8 @@ const convergence = Convergence({
   variable: "--font-convergence",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "ShopNow | Premium Branded Shoes",
-    template: "%s | ShopNow",
-  },
-  description:
-    "Discover an extensive selection of branded shoes. Shop the latest fashion trends with exceptional customer service at ShopNow.",
-  keywords: [
-    "branded clothing",
-    "fashion",
-    "online shopping",
-    "shoes",
-    "bags",
-    "accessories",
-    "t-shirts",
-  ],
-  authors: [{ name: "ShopNow" }],
-  icons: {
-    icon: "/images/brand/favicon.ico",
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://shopnow-lilac.vercel.app/",
-    siteName: "ShopNow",
-    title: "ShopNow | Premium Branded Shoes",
-    description:
-      "Discover an extensive selection of branded shoes. Shop the latest fashion trends with exceptional customer service at ShopNow.",
-  },
-};
+export const metadata: Metadata = rootMetadata;
+export const viewport: Viewport = rootViewport;
 
 export default function RootLayout({
   children,
@@ -58,6 +31,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-convergence">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(storeJsonLd) }}
+        />
         <LayoutClient>{children}</LayoutClient>
       </body>
     </html>

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMessages, selectChatMessages } from "@/redux/slices/chatSlice";
 import { AppDispatch } from "@/redux/store";
+import { brand } from "@/constants/brand";
 
 interface Message {
   id: string;
@@ -39,7 +40,7 @@ export const useAiAssistant = ({
       const greeting: Message = {
         id: "greeting-" + Date.now(),
         content:
-          "Hi! 👋 I'm your ShopNow assistant. I'm here to help you find the perfect products, answer your questions, and make your shopping experience amazing. What can I help you with today?",
+          `Hi! 👋 I'm your ${brand.name} assistant. I'm here to help you find the perfect products, answer your questions, and make your shopping experience amazing. What can I help you with today?`,
         role: "assistant",
         timestamp: new Date(),
       };
@@ -134,7 +135,7 @@ export const useAiAssistant = ({
               Authorization: `Bearer ${apiKey.trim()}`,
               "Content-Type": "application/json",
               "HTTP-Referer": window.location.origin,
-              "X-Title": "Shop Now AI Assistant",
+              "X-Title": brand.assistant.fullName,
             },
             body: JSON.stringify({
               model:

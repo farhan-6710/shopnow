@@ -20,6 +20,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { useNavigation } from "@/providers/NavigationProvider";
 import { selectCartCount } from "@/redux/cart/cartSlice";
+import { brand } from "@/constants/brand";
 
 const AiAssistant = dynamic(
   () => import("@/components/ai-assistant/AiAssistant"),
@@ -150,12 +151,12 @@ const HeaderActions = () => {
         }
         side="right"
         className="w-full sm:max-w-md h-full p-0 outline-none"
-        title="ShopNow AI Assistant"
+        title={brand.assistant.fullName}
         description="Chat with our AI to find products, get recommendations, and more."
       >
         <AiAssistant
           className="h-full border-0 rounded-none shadow-none"
-          title="ShopNow Assistant"
+          title={brand.assistant.name}
           placeholder="Ask about products, orders, or anything..."
           context={productsFromApiRes}
         />

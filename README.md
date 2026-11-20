@@ -88,7 +88,7 @@ GOOGLE_REDIRECT_URL
 AUTH_COOKIE_NAME
 ```
 
-`PORT` defaults to `5001`. `CLIENT_URL` defaults to `http://localhost:3000`. `AUTH_COOKIE_NAME` defaults to `jwt-token`.
+`PORT` defaults to `5001`. `GOOGLE_REDIRECT_URL` must be `<API origin>/auth/google/callback` and match the Google console. `CLIENT_URL` defaults to `http://localhost:3000`. `AUTH_COOKIE_NAME` defaults to `jwt-token`.
 
 ```sh
 npx prisma generate
@@ -124,7 +124,7 @@ npm run dev
 
 **Client:** `dev`, `build`, `start`, `lint`, `seed` (Supabase insert from `scripts/seed-products.ts`).
 
-**Server:** `dev` (nodemon + ts-node), `build` (`prisma generate` + `tsc`), `start` (`node dist/server.js`), `lint`, `test`, `test:watch`, `seed:products`.
+**Server:** `dev` (nodemon + ts-node), `build` (`prisma generate` + `tsc`), `start` (`node dist/server.js`), `lint` (currently broken, needs an ESLint flat config), `test`, `test:watch`, `seed:products`.
 
 ## Deploy
 
@@ -137,3 +137,11 @@ Axios calls `process.env.NEXT_PUBLIC_SERVER_URL` (see `client/src/constants/api.
 | Database | Neon (PostgreSQL) | `DATABASE_URL`                            | — |
 
 `GET /health` on the API returns `{ "status": "ok" }` with CORS origin `https://shopnow-lilac.vercel.app`. Local fallback is `http://localhost:5001`. No `vercel.json`, Render blueprint, or Docker files are in this repo.
+
+## Brand
+
+Brand copy (name, tagline, description, SEO, contact email, assistant name) lives in [`brandManifest.json`](./brandManifest.json). The client reads it through `client/src/constants/brand.ts`; edit the JSON, not the components. Theme tokens are in `client/src/styles/globals.css`.
+
+## Docs
+
+[CLAUDE.md](./CLAUDE.md) (working rules), [docs/](./docs/) (shared: PRD, DATABASE, RULES, MEMORY), [docs/client/](./docs/client/), [docs/server/](./docs/server/).

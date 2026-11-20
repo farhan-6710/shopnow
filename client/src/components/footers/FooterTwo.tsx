@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { brand } from "@/constants/brand";
 
 const FooterTwo = () => {
   return (
@@ -6,7 +7,7 @@ const FooterTwo = () => {
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4 space-y-4 sm:space-y-0">
         {/* Left Column: Copyright Text */}
         <div className="text-sm">
-          &copy; {new Date().getFullYear()} SHOPNOW. All rights reserved.
+          &copy; {new Date().getFullYear()} {brand.name}. All rights reserved.
         </div>
 
         {/* Right Column: PAYMENT APPS */}
