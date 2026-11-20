@@ -2,7 +2,7 @@
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import createSagaMiddleware from "redux-saga";
 import {
   cartReducer,
@@ -13,6 +13,14 @@ import {
 import rootSaga from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
+
+/** The server render has no localStorage: persist nowhere there, and to localStorage in the browser. */
+const serverStorage = {
+  getItem: async (): Promise<string | null> => null,
+  setItem: async (_key: string, value: string): Promise<string> => value,
+  removeItem: async (): Promise<void> => undefined,
+};
+const storage = typeof window === "undefined" ? serverStorage : createWebStorage("local");
 
 const persistConfig = {
   key: "root",
